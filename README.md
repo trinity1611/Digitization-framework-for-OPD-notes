@@ -147,6 +147,16 @@ None of these models is a medical device, and nothing here is for clinical decis
 `data/dataset_english.zip` holds the 77 prescription photographs used during development; read
 `data/README.md` before using or sharing them. It has no verbatim ground truth.
 
+## Licence
+
+The code and documentation in this repository are released under the MIT License (see `LICENSE`).
+
+That licence does not extend to things this project uses but does not own:
+
+- the images in `data/dataset_english.zip`, which remain under the terms of their original collection;
+- the model weights, each under its own licence (MedGemma under the Health AI Developer Foundations
+  terms; Gemma 4, Qwen3-VL and Qwen3.5 under Apache-2.0). See `docs/MODEL_DOWNLOAD_GUIDE.md`.
+
 ## Documentation
 
 | file | contents |
