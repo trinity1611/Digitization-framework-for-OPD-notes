@@ -1,0 +1,9 @@
+# Store and check out every text file with LF endings on all platforms. This matters for two things:
+# the master prompt must be byte-identical everywhere (its SHA-256 is part of every experiment record),
+# and shell / Slurm scripts must not carry CRLF.
+* text=auto eol=lf
+*.zip binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.pdf binary

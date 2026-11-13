@@ -1,0 +1,225 @@
+# Model registry. Add a model by adding an entry here; no application code
+# changes are needed when an existing adapter class fits the architecture.
+#
+# Every repository, revision, size, parameter count and licence below was read
+# from the Hugging Face Hub on 2026-11-13 (see docs/MODEL_DOWNLOAD_GUIDE.md).
+# `revision` pins the exact commit that is downloaded and loaded. The
+# application never substitutes another checkpoint for a registered one.
+#
+# Fields:
+#   display_name, tier (primary | optional), repo_id, repo_url, docs_url, revision
+#   architecture         model class named in the checkpoint's config.json
+#   model_type           config.json model_type
+#   adapter              "python.module:ClassName" implementing BaseVLMAdapter
+#   processor_class      processor named by the checkpoint
+#   backend              inference backend (only "transformers" is implemented)
+#   image_input          must be true for this benchmark
+#   parameters_total     all stored parameters (for MoE models this is NOT the active count)
+#   parameters_active    parameters active per token for MoE models, else null
+#   download_size_gb     size of the pinned revision's files
+#   precision_options    floating-point precisions the backend can load
+#   quantisation_options on-the-fly quantisation the backend can apply
+#   licence, licence_url, gated, access_requirements
+#   min_transformers     lowest Transformers version with this architecture
+#   supports_thinking    model has a switchable reasoning mode
+#   thinking_checkpoint_default  what the chat template does when nothing is passed
+#   forbidden_repo_ids   look-alike checkpoints that must never be loaded for this entry
+
+models:
+  medgemma_27b:
+    display_name: MedGemma 27B Multimodal IT
+    tier: primary
+    repo_id: google/medgemma-27b-it
+    repo_url: https://huggingface.co/google/medgemma-27b-it
+    docs_url: https://developers.google.com/health-ai-developer-foundations/medgemma/model-card-v1
+    revision: 2d3e00ea38b50018bf5dd3aa1009457cd2d5a48f
+    architecture: Gemma3ForConditionalGeneration
+    model_type: gemma3
+    adapter: rxbench.models.medgemma_27b:MedGemma27BAdapter
+    processor_class: Gemma3Processor
+    backend: transformers
+    image_input: true
+    parameters_total: 27432406640
+    parameters_active: null
+    download_size_gb: 54.90
+    precision_options: [bf16, fp16, fp32]
+    quantisation_options: [int8, int4]
+    default_precision: bf16
+    licence: Health AI Developer Foundations Terms of Use
+    licence_url: https://developers.google.com/health-ai-developer-foundations/terms
+    gated: true
+    access_requirements: >-
+      Gated (automatic approval). Sign in to Hugging Face, open the model page and
+      accept the Health AI Developer Foundations terms; then authenticate with a
+      token that can read gated repositories.
+    min_transformers: "4.50.0"
+    supports_thinking: false
+    thinking_checkpoint_default: null
+    forbidden_repo_ids: [google/medgemma-27b-text-it]
+    notes: >-
+      MedGemma 1 (Gemma 3 architecture), multimodal 27B. The text-only variant is
+      google/medgemma-27b-text-it and must not be used. Native image input is a
+      single 896x896 view encoded to 256 tokens (SigLIP); optional pan-and-scan tiling.
+      The chat template has no reasoning switch, but Gemma-3-based MedGemma models can
+      open a reasoning block (<unused94>thought ... <unused95>) on their own; it is
+      kept in the raw output and reported in the metadata.
+
+  gemma4_31b:
+    display_name: Gemma 4 31B IT
+    tier: primary
+    repo_id: google/gemma-4-31B-it
+    repo_url: https://huggingface.co/google/gemma-4-31B-it
+    docs_url: https://gemma.ai/models/gemma-4/model-card/
+    revision: 842da3794eaa0b77d5f08bae87a17459d91ff475
+    architecture: Gemma4ForConditionalGeneration
+    model_type: gemma4
+    adapter: rxbench.models.gemma4_31b:Gemma4_31BAdapter
+    processor_class: Gemma4Processor
+    backend: transformers
+    image_input: true
+    parameters_total: 31273088876
+    parameters_active: null
+    download_size_gb: 62.58
+    precision_options: [bf16, fp16, fp32]
+    quantisation_options: [int8, int4]
+    default_precision: bf16
+    licence: Apache-2.0
+    licence_url: https://ai.google.dev/gemma/docs/gemma_4_license
+    gated: false
+    access_requirements: None (public repository).
+    min_transformers: "5.5.0"
+    supports_thinking: true
+    thinking_checkpoint_default: false
+    forbidden_repo_ids: [google/gemma-4-31B]
+    notes: >-
+      Variable-resolution vision encoder with a visual token budget of 70, 140,
+      280 (checkpoint default), 560 or 1120. Thinking is off unless enabled.
+
+  qwen3vl_32b:
+    display_name: Qwen3-VL 32B Instruct
+    tier: primary
+    repo_id: Qwen/Qwen3-VL-32B-Instruct
+    repo_url: https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct
+    docs_url: https://github.com/QwenLM/Qwen3-VL
+    revision: 0cfaf48183f594c314753d30a4c4974bc75f3ccb
+    architecture: Qwen3VLForConditionalGeneration
+    model_type: qwen3_vl
+    adapter: rxbench.models.qwen3vl_32b:Qwen3VL32BAdapter
+    processor_class: Qwen3VLProcessor
+    backend: transformers
+    image_input: true
+    parameters_total: 33357390064
+    parameters_active: null
+    download_size_gb: 66.73
+    precision_options: [bf16, fp16, fp32]
+    quantisation_options: [int8, int4]
+    default_precision: bf16
+    licence: Apache-2.0
+    licence_url: https://huggingface.co/Qwen/Qwen3-VL-32B-Instruct
+    gated: false
+    access_requirements: None (public repository).
+    min_transformers: "4.57.0"
+    supports_thinking: false
+    thinking_checkpoint_default: null
+    forbidden_repo_ids: [Qwen/Qwen3-VL-32B-Thinking]
+    notes: >-
+      Dynamic-resolution vision encoder (16-pixel patches merged 2x2, one token
+      per 32x32 pixels). The Instruct checkpoint has no thinking mode; the
+      separate Thinking checkpoint must not be substituted.
+
+  gemma4_26b_a4b:
+    display_name: Gemma 4 26B A4B IT (MoE)
+    tier: optional
+    repo_id: google/gemma-4-26B-A4B-it
+    repo_url: https://huggingface.co/google/gemma-4-26B-A4B-it
+    docs_url: https://gemma.ai/models/gemma-4/model-card/
+    revision: 4d7ae4984b7db7de8f8457170b3f1a419ee76d52
+    architecture: Gemma4ForConditionalGeneration
+    model_type: gemma4
+    adapter: rxbench.models.gemma4_26b_a4b:Gemma4_26BA4BAdapter
+    processor_class: Gemma4Processor
+    backend: transformers
+    image_input: true
+    parameters_total: 25805936206
+    parameters_active: 4000000000
+    download_size_gb: 51.64
+    precision_options: [bf16, fp16, fp32]
+    quantisation_options: [int8, int4]
+    default_precision: bf16
+    licence: Apache-2.0
+    licence_url: https://ai.google.dev/gemma/docs/gemma_4_license
+    gated: false
+    access_requirements: None (public repository).
+    min_transformers: "5.5.0"
+    supports_thinking: true
+    thinking_checkpoint_default: false
+    forbidden_repo_ids: [google/gemma-4-26B-A4B]
+    notes: >-
+      Mixture-of-experts: about 4B parameters are active per token, but all
+      25.8B parameters are stored and loaded. Memory is sized on the total.
+
+  qwen3_5_27b:
+    display_name: Qwen3.5 27B
+    tier: optional
+    repo_id: Qwen/Qwen3.5-27B
+    repo_url: https://huggingface.co/Qwen/Qwen3.5-27B
+    docs_url: https://huggingface.co/Qwen/Qwen3.5-27B
+    revision: fc05daec18b0a78c049392ed2e771dde82bdf654
+    architecture: Qwen3_5ForConditionalGeneration
+    model_type: qwen3_5
+    adapter: rxbench.models.qwen3_5_27b:Qwen3_5_27BAdapter
+    processor_class: Qwen3VLProcessor
+    backend: transformers
+    image_input: true
+    parameters_total: 27781427952
+    parameters_active: null
+    download_size_gb: 55.59
+    precision_options: [bf16, fp16, fp32]
+    quantisation_options: [int8, int4]
+    default_precision: bf16
+    licence: Apache-2.0
+    licence_url: https://huggingface.co/Qwen/Qwen3.5-27B/blob/main/LICENSE
+    gated: false
+    access_requirements: None (public repository).
+    min_transformers: "5.0.0"
+    supports_thinking: true
+    thinking_checkpoint_default: true
+    forbidden_repo_ids: []
+    notes: >-
+      Natively multimodal. The chat template thinks by default; the baseline
+      passes enable_thinking=false explicitly, which is a recorded departure
+      from the checkpoint default.
+
+  medgemma_1_5_4b:
+    display_name: MedGemma 1.5 4B IT
+    tier: optional
+    repo_id: google/medgemma-1.5-4b-it
+    repo_url: https://huggingface.co/google/medgemma-1.5-4b-it
+    docs_url: https://huggingface.co/google/medgemma-1.5-4b-it
+    revision: 91850547d9f0b2fdd21aa7c5f4f3d1a8a52c243b
+    architecture: Gemma3ForConditionalGeneration
+    model_type: gemma3
+    adapter: rxbench.models.medgemma_1_5_4b:MedGemma15_4BAdapter
+    processor_class: Gemma3Processor
+    backend: transformers
+    image_input: true
+    parameters_total: 4300079472
+    parameters_active: null
+    download_size_gb: 8.64
+    precision_options: [bf16, fp16, fp32]
+    quantisation_options: [int8, int4]
+    default_precision: bf16
+    licence: Health AI Developer Foundations Terms of Use
+    licence_url: https://developers.google.com/health-ai-developer-foundations/terms
+    gated: true
+    access_requirements: >-
+      Gated (automatic approval). Accept the Health AI Developer Foundations
+      terms on the model page and authenticate with a Hugging Face token.
+    min_transformers: "4.50.0"
+    supports_thinking: false
+    thinking_checkpoint_default: null
+    forbidden_repo_ids: []
+    notes: >-
+      MedGemma 1.5 (4B multimodal). Smaller medical reference point; not the
+      same model generation as MedGemma 27B (MedGemma 1). Observed on 2026-11-13 to
+      open a reasoning block (<unused94>thought ... <unused95>) without being asked.

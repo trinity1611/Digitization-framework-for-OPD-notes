@@ -1,0 +1,32 @@
+# Experiment data may contain patient documents: never commit it.
+experiments/*
+!experiments/.gitkeep
+annotations/*.json
+logs/
+.state/
+
+# Unpacked dataset (the archive data/dataset_english.zip is tracked)
+data/dataset_english/
+
+# Model weights and caches
+*.safetensors
+*.gguf
+hf_cache/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
+
+# Slurm logs and transfer archives
+slurm_*.out
+*.tar
+*.tgz
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

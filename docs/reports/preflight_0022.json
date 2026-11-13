@@ -1,0 +1,245 @@
+{
+  "note": "Processor-level preflight only: no model weights were loaded and nothing was generated.",
+  "prompt_sha256": "d85b9b4ad9853f5dd5381125fafcfb8a99b6ed703c4dbb6070094d164efa61f2",
+  "image": {
+    "original_width": 960,
+    "original_height": 1280,
+    "original_mode": "RGB",
+    "original_format": "JPEG",
+    "model_input_width": 960,
+    "model_input_height": 1280,
+    "model_input_mode": "RGB",
+    "model_input_pixel_sha256": "aa821471802814756f277586f48fa6fb1a60deaed46b82add432ed9bf015a3dc",
+    "transformations": []
+  },
+  "models": {
+    "medgemma_27b": {
+      "n_input_tokens": 4729,
+      "n_image_tokens": 256,
+      "rendered_prompt_sha256": "5c2b3cef03f67f433f8bfbdb06d9f169721a43e617802b0a1ea8e6d3fe6486a6",
+      "chat_template_arguments": {},
+      "image_processing": {
+        "processor_class": "Gemma3Processor",
+        "image_processor_class": "Gemma3ImageProcessor",
+        "explicit_arguments": "none (checkpoint defaults)",
+        "input_width": 960,
+        "input_height": 1280,
+        "pixel_values_shape": [
+          1,
+          3,
+          896,
+          896
+        ],
+        "image_tokens": 256,
+        "method": "resize to a fixed square view",
+        "native_view_size": {
+          "height": 896,
+          "width": 896
+        },
+        "views": 1,
+        "tokens_per_view": 256,
+        "pan_and_scan": false,
+        "aspect_ratio_preserved": false,
+        "note": "The 960x1280 page is resized to 896x896 without keeping its aspect ratio."
+      },
+      "prompt_tokens": 4462,
+      "thinking": {
+        "supported": false,
+        "enabled": false,
+        "requested": false
+      },
+      "weights_loaded": false
+    },
+    "gemma4_31b": {
+      "n_input_tokens": 5540,
+      "n_image_tokens": 1064,
+      "rendered_prompt_sha256": "919efccff18ae1806cf3631d72f7e491c2a2a7380efd62ae3f9cca5cc07a82e9",
+      "chat_template_arguments": {
+        "enable_thinking": false
+      },
+      "image_processing": {
+        "processor_class": "Gemma4Processor",
+        "image_processor_class": "Gemma4ImageProcessor",
+        "explicit_arguments": {
+          "max_soft_tokens": 1120
+        },
+        "input_width": 960,
+        "input_height": 1280,
+        "pixel_values_shape": [
+          1,
+          10080,
+          768
+        ],
+        "image_tokens": 1064,
+        "method": "aspect-ratio-preserving resize to fit a visual token budget",
+        "visual_token_budget": 1120,
+        "checkpoint_default_budget": 280,
+        "patch_size": 16,
+        "pooling_kernel_size": 3,
+        "patches": 10080,
+        "aspect_ratio_preserved": true,
+        "note": "The page is encoded as 10080 patches pooled to at most 1120 image tokens."
+      },
+      "prompt_tokens": 4462,
+      "thinking": {
+        "supported": true,
+        "enabled": false,
+        "checkpoint_default": false
+      },
+      "weights_loaded": false
+    },
+    "qwen3vl_32b": {
+      "n_input_tokens": 5269,
+      "n_image_tokens": 1200,
+      "rendered_prompt_sha256": "63d0d3c4bd12efc92b97c02c998dcc3f28e73c4bb6fd4506b36284b04ed435aa",
+      "chat_template_arguments": {},
+      "image_processing": {
+        "processor_class": "Qwen3VLProcessor",
+        "image_processor_class": "Qwen2VLImageProcessor",
+        "explicit_arguments": "none (checkpoint defaults)",
+        "input_width": 960,
+        "input_height": 1280,
+        "pixel_values_shape": [
+          4800,
+          1536
+        ],
+        "image_tokens": 1200,
+        "method": "dynamic-resolution resize (aspect ratio approximately preserved)",
+        "checkpoint_min_pixels": 65536,
+        "checkpoint_max_pixels": 16777216,
+        "patch_size": 16,
+        "merge_size": 2,
+        "aspect_ratio_preserved": true,
+        "grid_patches_height_width": [
+          80,
+          60
+        ],
+        "resized_width": 960,
+        "resized_height": 1280,
+        "note": "The 960x1280 page is resized to 960x1280 and encoded as 1200 image tokens."
+      },
+      "prompt_tokens": 4059,
+      "thinking": {
+        "supported": false,
+        "enabled": false,
+        "requested": false
+      },
+      "weights_loaded": false
+    },
+    "gemma4_26b_a4b": {
+      "n_input_tokens": 5540,
+      "n_image_tokens": 1064,
+      "rendered_prompt_sha256": "919efccff18ae1806cf3631d72f7e491c2a2a7380efd62ae3f9cca5cc07a82e9",
+      "chat_template_arguments": {
+        "enable_thinking": false
+      },
+      "image_processing": {
+        "processor_class": "Gemma4Processor",
+        "image_processor_class": "Gemma4ImageProcessor",
+        "explicit_arguments": {
+          "max_soft_tokens": 1120
+        },
+        "input_width": 960,
+        "input_height": 1280,
+        "pixel_values_shape": [
+          1,
+          10080,
+          768
+        ],
+        "image_tokens": 1064,
+        "method": "aspect-ratio-preserving resize to fit a visual token budget",
+        "visual_token_budget": 1120,
+        "checkpoint_default_budget": 280,
+        "patch_size": 16,
+        "pooling_kernel_size": 3,
+        "patches": 10080,
+        "aspect_ratio_preserved": true,
+        "note": "The page is encoded as 10080 patches pooled to at most 1120 image tokens."
+      },
+      "prompt_tokens": 4462,
+      "thinking": {
+        "supported": true,
+        "enabled": false,
+        "checkpoint_default": false
+      },
+      "weights_loaded": false
+    },
+    "qwen3_5_27b": {
+      "n_input_tokens": 5736,
+      "n_image_tokens": 1200,
+      "rendered_prompt_sha256": "33273111598c4bc5ab0345b8d31ee02dc25e5c28e64fc0110c4c6d81fb7735fc",
+      "chat_template_arguments": {
+        "enable_thinking": false
+      },
+      "image_processing": {
+        "processor_class": "Qwen3VLProcessor",
+        "image_processor_class": "Qwen2VLImageProcessor",
+        "explicit_arguments": "none (checkpoint defaults)",
+        "input_width": 960,
+        "input_height": 1280,
+        "pixel_values_shape": [
+          4800,
+          1536
+        ],
+        "image_tokens": 1200,
+        "method": "dynamic-resolution resize (aspect ratio approximately preserved)",
+        "checkpoint_min_pixels": 65536,
+        "checkpoint_max_pixels": 16777216,
+        "patch_size": 16,
+        "merge_size": 2,
+        "aspect_ratio_preserved": true,
+        "grid_patches_height_width": [
+          80,
+          60
+        ],
+        "resized_width": 960,
+        "resized_height": 1280,
+        "note": "The 960x1280 page is resized to 960x1280 and encoded as 1200 image tokens."
+      },
+      "prompt_tokens": 4523,
+      "thinking": {
+        "supported": true,
+        "enabled": false,
+        "checkpoint_default": true
+      },
+      "weights_loaded": false
+    },
+    "medgemma_1_5_4b": {
+      "n_input_tokens": 4729,
+      "n_image_tokens": 256,
+      "rendered_prompt_sha256": "5c2b3cef03f67f433f8bfbdb06d9f169721a43e617802b0a1ea8e6d3fe6486a6",
+      "chat_template_arguments": {},
+      "image_processing": {
+        "processor_class": "Gemma3Processor",
+        "image_processor_class": "Gemma3ImageProcessor",
+        "explicit_arguments": "none (checkpoint defaults)",
+        "input_width": 960,
+        "input_height": 1280,
+        "pixel_values_shape": [
+          1,
+          3,
+          896,
+          896
+        ],
+        "image_tokens": 256,
+        "method": "resize to a fixed square view",
+        "native_view_size": {
+          "height": 896,
+          "width": 896
+        },
+        "views": 1,
+        "tokens_per_view": 256,
+        "pan_and_scan": false,
+        "aspect_ratio_preserved": false,
+        "note": "The 960x1280 page is resized to 896x896 without keeping its aspect ratio."
+      },
+      "prompt_tokens": 4462,
+      "thinking": {
+        "supported": false,
+        "enabled": false,
+        "requested": false
+      },
+      "weights_loaded": false
+    }
+  }
+}

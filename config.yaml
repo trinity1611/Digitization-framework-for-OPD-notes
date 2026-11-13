@@ -1,0 +1,88 @@
+# Prescription VLM zero-shot baseline: application configuration.
+# Relative paths are resolved against the project root. Environment variables
+# RXBENCH_EXPERIMENTS_DIR, RXBENCH_STATE_DIR and RXBENCH_LOG_DIR override the
+# paths below (the Slurm job scripts use them to keep job I/O on /scratch).
+
+paths:
+  experiments_dir: experiments
+  prompt_file: prompts/master_prescription_prompt.txt
+  annotations_dir: annotations
+  state_dir: .state
+  log_dir: logs
+  model_registry: model_registry.yaml
+  # null = the Hugging Face cache (HF_HUB_CACHE / HF_HOME). Set a directory to
+  # keep model snapshots somewhere else.
+  hf_cache_dir: null
+
+execution:
+  # Sequential is the experimental default: load -> infer -> save -> unload -> verify.
+  mode: sequential
+  # Simultaneous serving is not implemented in this baseline; the flag exists so
+  # that enabling it is always an explicit, recorded decision.
+  allow_simultaneous: false
+  device_map: auto
+  # After unloading, memory must return to within this many GB of the
+  # pre-load level, otherwise a warning is written to the metadata.
+  unload_tolerance_gb: 4.0
+  memory_sample_interval_s: 0.25
+
+# Default generation settings (greedy). Every actual value is written to metadata.json.
+generation:
+  do_sample: false
+  temperature: 0.0
+  top_p: null
+  top_k: null
+  max_new_tokens: 8192
+  repetition_penalty: 1.0
+  seed: 0
+  stop_sequences: []
+  # Reasoning / thinking mode. Off for the baseline so that all models answer
+  # directly; models without such a mode ignore it (recorded as a warning if set).
+  enable_thinking: false
+
+image:
+  # Rotate according to the EXIF orientation tag so that the page is upright.
+  # Applied identically for every model and recorded as a transformation.
+  apply_exif_orientation: true
+  pdf_render_dpi: 200
+
+# Per-model settings. `image_processing` holds options of the model's own
+# native image processor only (no cropping, OCR or enhancement).
+models:
+  medgemma_27b:
+    precision: bf16
+    image_processing:
+      # Gemma 3 native "pan and scan" tiling. false = checkpoint default
+      # (one 896x896 view, 256 image tokens).
+      do_pan_and_scan: false
+  gemma4_31b:
+    precision: bf16
+    image_processing:
+      # Visual token budget: one of 70, 140, 280, 560, 1120. The checkpoint
+      # default is 280; the official model card recommends higher budgets for
+      # OCR / document parsing, so the baseline uses 1120. See KNOWN_LIMITATIONS.md.
+      max_soft_tokens: 1120
+  qwen3vl_32b:
+    precision: bf16
+    image_processing:
+      # null = checkpoint default (dynamic resolution, 65,536 .. 16,777,216 pixels).
+      min_pixels: null
+      max_pixels: null
+  gemma4_26b_a4b:
+    precision: bf16
+    image_processing:
+      max_soft_tokens: 1120
+  qwen3_5_27b:
+    precision: bf16
+    image_processing:
+      min_pixels: null
+      max_pixels: null
+  medgemma_1_5_4b:
+    precision: bf16
+    image_processing:
+      do_pan_and_scan: false
+
+privacy:
+  # Inference never contacts the network: models are loaded from local snapshot
+  # directories with local_files_only=True and HF_HUB_OFFLINE=1.
+  force_offline_inference: true
